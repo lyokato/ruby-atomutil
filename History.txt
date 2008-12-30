@@ -1,0 +1,44 @@
+== 0.0.7 2008-08-29
+
+* bugfix: fix where it checks the response code is OK or No Content when updating resource.
+          fix Element::to_s because last version of REXML::Document::to_s doesn't accept any param.
+
+== 0.0.6 2008-05-01
+
+Removed dependency on REXML::Formatters::Pretty,
+because REXML::Formatters::Pretty inserts linebreaks into each tags...
+But this isn't best solution.
+
+== 0.0.5 2008-04-30
+
+* bugfix: Atom::Content didn't work as expected with multibyte UTF-8 string.
+          Atom::Element::to_s didn't work well on ruby 1.8.6 or above, because
+          REXML::Document::to_s is deprecated and has a bug on 1.8.6 or 1.9 patched release.
+          require 'sha1' -> require 'digest/sha1'
+
+Thanks to walf443, Elton Okada.
+
+== 0.0.4 2008-02-12
+
+* bugfix: SimpleCache - fixed typo
+          CacheResource - fixed type
+          ServiceInfoStorage#clone_collection now returns new collections correctly.
+          ServiceInfo#accepts_media_type? works as expected now.
+          added credential control on Atompub::Client#delete_resource
+          approved error messages.
+
+== 0.0.3 2008-02-12
+
+* bugfix: now this handle URL which has query correctly.
+  approved error messages.
+
+Thanks to cho45.
+
+== 0.0.2 2007-12-05
+
+* documentation improvement:
+
+== 0.0.1 2007-12-05
+
+* 1 major enhancement:
+  * Initial release
