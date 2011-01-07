@@ -29,7 +29,7 @@
 # http://search.cpan.org/perldoc?XML%3A%3AAtom%3A%3AExt%3A%3AThreading
 # http://search.cpan.org/perldoc?Atompub
 #
-# This package supports however only version 1.0 of Atom(original Perl libraries support also version 0.3),
+# This package however supports only version 1.0 of Atom(original Perl libraries support also version 0.3),
 # and is not stable yet.
 # We need more document, more tutorials, and more tests by RSpec.
 #++
