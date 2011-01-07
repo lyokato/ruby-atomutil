@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["lyokato"]
   s.date = %q{2011-01-07}
-  s.description = %q{TODO: longer description of your gem}
+  s.description = %q{This library allows your to handle AtomPub and Atom Feed easily}
   s.email = %q{lyo.kato@gmail.com}
   s.extra_rdoc_files = [
     "LICENSE.txt",
@@ -45,7 +45,7 @@ Gem::Specification.new do |s|
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.4.2}
-  s.summary = %q{TODO: one-line summary of your gem}
+  s.summary = %q{Ruby AtomPub Client}
   s.test_files = [
     "spec/categories_spec.rb",
     "spec/category_spec.rb",
