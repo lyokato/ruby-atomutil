@@ -15,8 +15,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "atomutil"
   gem.homepage = "http://github.com/lyokato/ruby-atomutil"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{Ruby AtomPub Client}
+  gem.description = %Q{This library allows your to handle AtomPub and Atom Feed easily}
   gem.email = "lyo.kato@gmail.com"
   gem.authors = ["lyokato"]
   # Include your dependencies below. Runtime dependencies are required when using your gem,
