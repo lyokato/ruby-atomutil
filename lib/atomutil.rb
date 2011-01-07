@@ -55,7 +55,7 @@ module AtomUtil
   module VERSION#:nodoc:
     MAJOR = 0
     MINOR = 1
-    TINY  = 0
+    TINY  = 1
     STRING = [MAJOR, MINOR, TINY].join('.')
   end
 end
@@ -1339,7 +1339,7 @@ module Atompub
     #
     def get_service(service_uri)
       get_contents_except_resources(service_uri) do |res|
-        warn "Bad Content Type" unless Atom::MediaType::SERVICE.is_a?(@res['Content-Type'])
+        #warn "Bad Content Type" unless Atom::MediaType::SERVICE.is_a?(@res['Content-Type'])
         @rc = Atom::Service.new :stream => @res.body
         @rc.workspaces.each do |workspace|
           workspace.collections.each do |collection|
@@ -1359,7 +1359,7 @@ module Atompub
     #
     def get_categories(categories_uri)
       get_contents_except_resources(categories_uri) do |res|
-        warn "Bad Content Type" unless Atom::MediaType::CATEGORIES.is_a?(@res['Content-Type'])
+        #warn "Bad Content Type" unless Atom::MediaType::CATEGORIES.is_a?(@res['Content-Type'])
         @rc = Atom::Categories.new :stream => @res.body
       end
       @rc
@@ -1372,7 +1372,7 @@ module Atompub
     #
     def get_feed(feed_uri)
       get_contents_except_resources(feed_uri) do |res|
-        warn "Bad Content Type" unless Atom::MediaType::FEED.is_a?(@res['Content-Type'])
+        #warn "Bad Content Type" unless Atom::MediaType::FEED.is_a?(@res['Content-Type'])
         @rc = Atom::Feed.new :stream => res.body
       end
       @rc
@@ -1567,8 +1567,8 @@ module Atompub
         @res = http.request(@req)
         case @res
           when Net::HTTPSuccess
-            warn "Bad Status Code: #{@res.code}" unless @res.class == Net::HTTPCreated
-            warn "Bad Content Type: #{@res['Content-Type']}" unless Atom::MediaType::ENTRY.is_a?(@res['Content-Type'])
+            #warn "Bad Status Code: #{@res.code}" unless @res.class == Net::HTTPCreated
+            #warn "Bad Content Type: #{@res['Content-Type']}" unless Atom::MediaType::ENTRY.is_a?(@res['Content-Type'])
             if @res['Location'].nil?
               raise ResponseError, "No Location"
             end
@@ -1603,7 +1603,7 @@ module Atompub
         @res = http.request(@req)
         case @res
           when Net::HTTPSuccess
-            warn "Bad Status Code: #{@res.code}" unless @res.class == Net::HTTPOK || @res.class == Net::HTTPNoContent
+            #warn "Bad Status Code: #{@res.code}" unless @res.class == Net::HTTPOK || @res.class == Net::HTTPNoContent
             unless @res.body.nil?
               @rc = Atom::MediaType::ENTRY.is_a?(@res['Content-Type']) ? Atom::Entry.new(:stream => @res.body) : @res.body
               @cache.put uri.to_s, {
@@ -1626,7 +1626,7 @@ module Atompub
         @res = http.request(@req)
         case @res
           when Net::HTTPSuccess
-            warn "Bad Status Code: #{@res.code}" unless @res.class == Net::HTTPOK || @res.class == Net::HTTPNoContent
+            #warn "Bad Status Code: #{@res.code}" unless @res.class == Net::HTTPOK || @res.class == Net::HTTPNoContent
           else
             raise RequestError, "Failed to delete resource. #{@res.code}"
           end
