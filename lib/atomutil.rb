@@ -54,8 +54,8 @@ require 'rexml/document'
 module AtomUtil
   module VERSION#:nodoc:
     MAJOR = 0
-    MINOR = 0
-    TINY  = 7
+    MINOR = 1
+    TINY  = 0
     STRING = [MAJOR, MINOR, TINY].join('.')
   end
 end
@@ -760,7 +760,7 @@ module Atom
         |[\xf0-\xf7][\x80-\xbf]{3}
         |[\xf8-\xfb][\x80-\xbf]{4}
         |[\xfc-\xfd][\x80-\xbf]{5}
-        )*$/xs
+        )*$/x
         copy = "<div xmlns=\"http://www.w3.org/1999/xhtml\">#{value}</div>"  
         is_valid = true
         begin
