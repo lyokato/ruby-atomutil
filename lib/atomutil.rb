@@ -55,7 +55,7 @@ module AtomUtil
   module VERSION#:nodoc:
     MAJOR = 0
     MINOR = 1
-    TINY  = 1
+    TINY  = 3
     STRING = [MAJOR, MINOR, TINY].join('.')
   end
 end
@@ -592,7 +592,7 @@ module Atom
       doc = REXML::Document.new
       decl = REXML::XMLDecl.new("1.0", "utf-8")
       doc.add decl
-      doc.add_element @elem.deep_clone
+      doc.add_element @elem
       doc.to_s
     end
     private
@@ -753,14 +753,23 @@ module Atom
     end
 
     def body=(value)
-      if value =~ /^(?:
-         [[:print:]]
+
+      if value =~ Regexp.new("^(?:
+        [[:print:]]
         |[\xc0-\xdf][\x80-\xbf]
         |[\xe0-\xef][\x80-\xbf]{2}
         |[\xf0-\xf7][\x80-\xbf]{3}
         |[\xf8-\xfb][\x80-\xbf]{4}
         |[\xfc-\xfd][\x80-\xbf]{5}
-        )*$/x
+        )*$", Regexp::EXTENDED, 'n')
+      #if value =~ /^(?:
+      #   [[:print:]]
+      #  |[\xc0-\xdf][\x80-\xbf]
+      #  |[\xe0-\xef][\x80-\xbf]{2}
+      #  |[\xf0-\xf7][\x80-\xbf]{3}
+      #  |[\xf8-\xfb][\x80-\xbf]{4}
+      #  |[\xfc-\xfd][\x80-\xbf]{5}
+      #  )*$/x
         copy = "<div xmlns=\"http://www.w3.org/1999/xhtml\">#{value}</div>"  
         is_valid = true
         begin
