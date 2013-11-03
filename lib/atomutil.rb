@@ -38,7 +38,7 @@ require 'uri'
 require 'open-uri'
 require 'pathname'
 require 'time'
-require 'net/http'
+require 'net/https'
 require 'rexml/document'
 
 # = Utilities for AtomPub / Atom Syndication Format
@@ -1514,7 +1514,7 @@ module Atompub
       uri = URI.parse(uri)
       @req = Net::HTTP::Get.new uri.request_uri
       set_common_info(@req)
-      @http_class.start(uri.host, uri.port) do |http|
+      @http_class.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
         @res = http.request(@req)
         case @res
           when Net::HTTPOK
@@ -1535,7 +1535,7 @@ module Atompub
         @req['If-Modified-Since'] = cache.last_modified unless cache.last_modified.nil?
         @req['If-None-Match'] = cache.etag unless cache.etag.nil?
       end
-      @http_class.start(uri.host, uri.port) do |http|
+      @http_class.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
         @res = http.request(@req)
         case @res
           when Net::HTTPOK
@@ -1572,7 +1572,7 @@ module Atompub
       @req['Slug'] = URI.encode(URI.decode(slug)) unless slug.nil?
       set_common_info(@req)
       @req.body = r
-      @http_class.start(uri.host, uri.port) do |http|
+      @http_class.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
         @res = http.request(@req)
         case @res
           when Net::HTTPSuccess
@@ -1608,7 +1608,7 @@ module Atompub
       end
       set_common_info(@req)
       @req.body = r
-      @http_class.start(uri.host, uri.port) do |http|
+      @http_class.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
         @res = http.request(@req)
         case @res
           when Net::HTTPSuccess
@@ -1631,7 +1631,7 @@ module Atompub
       uri = URI.parse(uri)
       @req = Net::HTTP::Delete.new uri.request_uri
       set_common_info(@req)
-      @http_class.start(uri.host, uri.port) do |http|
+      @http_class.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
         @res = http.request(@req)
         case @res
           when Net::HTTPSuccess
