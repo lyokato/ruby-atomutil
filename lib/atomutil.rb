@@ -523,7 +523,11 @@ module Atom
             element.add_attribute a
           end
         end
-        element.text = value.elem.text unless value.elem.text.nil?
+        #element.text = value.elem.text unless value.elem.text.nil?
+        text = value.elem.get_text
+        unless text.nil?
+          element.text = REXML::Text.new(text.to_s, true, nil, true)
+        end
       else
         if value.is_a?(REXML::Element)
           element.add_element value.deep_clone
