@@ -2,6 +2,15 @@ require File.dirname(__FILE__) + '/spec_helper.rb'
 
 require 'base64'
 
+describe Atom::Entry, "setter/getter and building xml" do
+
+  it "should escape body collectly" do
+    entry = Atom::Entry.new
+    entry.content = "&lt;br&gt;"
+    entry.to_s.should == "<?xml version='1.0' encoding='UTF-8'?><entry xmlns='http://www.w3.org/2005/Atom'><content type='text'>&amp;lt;br&amp;gt;</content></entry>"
+  end
+end
+
 describe Atom::Content, "setter/getter and building xml" do
 
   it "should set and get type" do
