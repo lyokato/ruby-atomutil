@@ -64,17 +64,17 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_development_dependency(%q<rspec>, ["~> 2.4.0"])
-      s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
-      s.add_development_dependency(%q<jeweler>, ["~> 1.5.2"])
+      s.add_development_dependency(%q<bundler>, ["~> 1.16.1"])
+      s.add_development_dependency(%q<jeweler>, ["~> 2.3.9"])
     else
       s.add_dependency(%q<rspec>, ["~> 2.4.0"])
-      s.add_dependency(%q<bundler>, ["~> 1.0.0"])
-      s.add_dependency(%q<jeweler>, ["~> 1.5.2"])
+      s.add_dependency(%q<bundler>, ["~> 1.16.1"])
+      s.add_dependency(%q<jeweler>, ["~> 2.3.9"])
     end
   else
     s.add_dependency(%q<rspec>, ["~> 2.4.0"])
-    s.add_dependency(%q<bundler>, ["~> 1.0.0"])
-    s.add_dependency(%q<jeweler>, ["~> 1.5.2"])
+    s.add_dependency(%q<bundler>, ["~> 1.16.1"])
+    s.add_dependency(%q<jeweler>, ["~> 2.3.9"])
   end
 end
 
