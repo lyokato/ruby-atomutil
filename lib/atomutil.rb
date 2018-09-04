@@ -1,24 +1,24 @@
 #--
 # Copyright (C) 2007 Lyo Kato, <lyo.kato _at_ gmail.com>.
 #
-# Permission is hereby granted, free of charge, to any person obtaining 
-# a copy of this software and associated documentation files (the 
-# "Software"), to deal in the Software without restriction, including 
-# without limitation the rights to use, copy, modify, merge, publish, 
-# distribute, sublicense, and/or sell copies of the Software, and to 
-# permit persons to whom the Software is furnished to do so, subject to 
-# the following conditions: 
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
 #
-# The above copyright notice and this permission notice shall be 
-# included in all copies or substantial portions of the Software. 
-# 
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, 
-# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF 
-# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND 
-# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE 
-# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION 
-# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION 
-# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 # This package allows you to handle AtomPub and Atom Syndication Format easily.
 # This is just a porting for Perl's great libraries, XML::Atom, XML::Atom::Service,
@@ -216,7 +216,7 @@ module Atom
       return false unless value.type == @type
       return true  if     value.subtype == '*'
       return false unless value.subtype == @subtype
-      return true  if     value.parameters.nil? || @parameters.nil? 
+      return true  if     value.parameters.nil? || @parameters.nil?
       return value.parameters == @parameters
     end
     SERVICE    = self.new 'application/atomsvc+xml'
@@ -254,7 +254,7 @@ module Atom
     @element_ns = nil
     def self.element_ns(ns=nil)
       unless ns.nil?
-        @element_ns = ns.is_a?(Namespace) ? ns : Namespace.new(:uri => ns) 
+        @element_ns = ns.is_a?(Namespace) ? ns : Namespace.new(:uri => ns)
       end
       @element_ns
     end
@@ -359,7 +359,7 @@ module Atom
       name.tr!('-', '_')
       unless moniker.nil?
         moniker = moniker.to_s
-        moniker.tr!('-', '_') 
+        moniker.tr!('-', '_')
       end
       elem_ns = element_ns || ns
       class_eval(<<-EOS, __FILE__, __LINE__)
@@ -396,7 +396,7 @@ module Atom
       name.tr!('-', '_')
       unless moniker.nil?
         moniker = moniker.to_s
-        moniker.tr!('-', '_') 
+        moniker.tr!('-', '_')
       end
       elem_ns = ext_class.element_ns || ns
       class_eval(<<-EOS, __FILE__, __LINE__)
@@ -564,7 +564,7 @@ module Atom
     def get_object(ns, element_name, ext_class)
       elements = getlist(ns, element_name)
       return nil if elements.empty?
-      ext_class.new(:namespace => ns, :elem => elements.first) 
+      ext_class.new(:namespace => ns, :elem => elements.first)
     end
     # Get all indicated elements as an object of the class you passed as thrid argument.
     #
@@ -576,7 +576,7 @@ module Atom
       elements = getlist(ns, element_name)
       return [] if elements.empty?
       elements.collect do |e|
-        ext_class.new(:namespace => ns, :elem => e) 
+        ext_class.new(:namespace => ns, :elem => e)
       end
     end
     # Get attribute value for indicated key
@@ -754,23 +754,8 @@ module Atom
 
     def body=(value)
 
-      if value =~ Regexp.new("^(?:
-        [[:print:]]
-        |[\xc0-\xdf][\x80-\xbf]
-        |[\xe0-\xef][\x80-\xbf]{2}
-        |[\xf0-\xf7][\x80-\xbf]{3}
-        |[\xf8-\xfb][\x80-\xbf]{4}
-        |[\xfc-\xfd][\x80-\xbf]{5}
-        )*$", Regexp::EXTENDED, 'n')
-      #if value =~ /^(?:
-      #   [[:print:]]
-      #  |[\xc0-\xdf][\x80-\xbf]
-      #  |[\xe0-\xef][\x80-\xbf]{2}
-      #  |[\xf0-\xf7][\x80-\xbf]{3}
-      #  |[\xf8-\xfb][\x80-\xbf]{4}
-      #  |[\xfc-\xfd][\x80-\xbf]{5}
-      #  )*$/x
-        copy = "<div xmlns=\"http://www.w3.org/1999/xhtml\">#{value}</div>"  
+      if is_utf8?(value)
+        copy = "<div xmlns=\"http://www.w3.org/1999/xhtml\">#{value}</div>"
         is_valid = true
         begin
           node = REXML::Document.new(copy).elements[1][0]
@@ -819,6 +804,20 @@ module Atom
       end
       @body
     end
+
+    private
+
+    def is_utf8?(str)
+      case str.encoding
+      when Encoding::UTF_8
+        str.valid_encoding?
+      when Encoding::ASCII_8BIT, Encoding::US_ASCII
+        str.dup.force_encoding(Encoding::UTF_8).valid_encoding?
+       else
+         false
+      end
+    end
+
   end
 
   class RootElement < Element
@@ -1100,7 +1099,7 @@ module Atom
       gen = gen.is_a?(Generator) ? gen : Generator.new(:name => gen)
       set(Namespace::ATOM, 'generator', gen)
     end
-    
+
     def language
       @elem.attributes['xml:lang']
     end
@@ -1229,7 +1228,7 @@ module Atompub
       return true if @collection.nil?
       if @accepts.nil?
         @accepts = @collection.accepts.collect do |accept|
-          accept.text.split(/[\s,]+/) 
+          accept.text.split(/[\s,]+/)
         end.flatten
         @accepts << Atom::MediaType::ENTRY if @accepts.empty?
       end
@@ -1269,7 +1268,7 @@ module Atompub
       collection.accepts.each { |a| coll.add_accept a.text }
       collection.categories_list.each do |cats|
         unless cats.nil?
-          new_cats = cats.href.nil?? clone_categories(cats) : get_categories(cats.href, client) 
+          new_cats = cats.href.nil?? clone_categories(cats) : get_categories(cats.href, client)
           coll.categories = new_cats unless new_cats.nil?
         end
       end
@@ -1352,8 +1351,8 @@ module Atompub
         @rc = Atom::Service.new :stream => @res.body
         @rc.workspaces.each do |workspace|
           workspace.collections.each do |collection|
-            #@service_info.put(collection.href, collection, self) 
-            @service_info.put(collection.href, collection) 
+            #@service_info.put(collection.href, collection, self)
+            @service_info.put(collection.href, collection)
           end
         end
       end
@@ -1490,7 +1489,7 @@ module Atompub
     #   client.delete_entry(entry.edit_link)
     #
     def delete_entry(edit_uri)
-      delete_resource(edit_uri) 
+      delete_resource(edit_uri)
     end
     # Delete media
     #
@@ -1506,7 +1505,7 @@ module Atompub
     # Set request headers those are required on each request accessing resources.
     def set_common_info(req)
       req['User-Agent'] = @agent
-      @auth.authorize(req) 
+      @auth.authorize(req)
     end
     # Get contents, for example, service-document, categories, and feed.
     def get_contents_except_resources(uri, &block)
@@ -1671,7 +1670,7 @@ module Atompub
       # initializer
       #
       # Set two parameters as hash
-      # * username 
+      # * username
       # * password
       #
       # Usage:
@@ -1714,7 +1713,7 @@ module Atompub
       # initializer
       #
       # Set two parameters as hash
-      # * username 
+      # * username
       # * password
       #
       # Usage:
