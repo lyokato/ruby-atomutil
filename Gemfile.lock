@@ -44,7 +44,7 @@ GEM
       multi_xml (~> 0.5)
       rack (>= 1.2, < 3)
     psych (3.0.2)
-    rack (2.0.5)
+    rack (2.0.8)
     rake (10.5.0)
     rdoc (6.0.4)
     rspec (2.4.0)
