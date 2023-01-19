@@ -11,4 +11,4 @@ group :development do
   gem "jeweler", "~> 2.3.9"
 end
 
-gem 'rake', '< 11.0'
+gem 'rake', '< 13.0'

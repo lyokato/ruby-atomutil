@@ -48,7 +48,7 @@ GEM
     psych (3.0.2)
     racc (1.6.0)
     rack (2.2.6.2)
-    rake (10.5.0)
+    rake (12.3.3)
     rchardet (1.8.0)
     rdoc (6.3.2)
     rspec (2.4.0)
@@ -68,7 +68,7 @@ PLATFORMS
 DEPENDENCIES
   bundler (~> 1.16.1)
   jeweler (~> 2.3.9)
-  rake (< 11.0)
+  rake (< 13.0)
   rspec (~> 2.4.0)
 
 BUNDLED WITH
